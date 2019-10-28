@@ -12,38 +12,40 @@
 </template>
 
 <script>
-  import {TimelineMax} from 'gsap'
+  import {TimelineMax, TweenMax, Power2} from 'gsap'
 
   export default {
     mounted() {
+      const windowWidth = window.innerWidth
       const {pig, Horse, Rabbit, Cow, Sheep} = this.$refs
 
       const timeline = new TimelineMax()
-      timeline.set(pig, {y: '+=10', autoAlpha: 0})
+      timeline.set(pig, {y: '+=10', x: '-=50', autoAlpha: 0})
       timeline.set(Horse, {y: '+=10', autoAlpha: 0})
       timeline.set(Rabbit, {y: '+=10', autoAlpha: 0})
       timeline.set(Cow, {y: '+=10', autoAlpha: 0})
-      timeline.set(Sheep, {y: '+=10', autoAlpha: 0})
+      timeline.to(pig, 0, {autoAlpha: 1})
 
+      timeline.set(Sheep, {y: '+=10', autoAlpha: 0})
       timeline.to(Horse, 0, {autoAlpha: 1, rotation: -5})
       timeline.to(Rabbit, 0, {autoAlpha: 1})
-      timeline.to(Cow, 0, {autoAlpha: 1, rotation: -5})
+      timeline.to(Cow, 0, {autoAlpha: 1, rotation: 5})
+
       timeline.to(Sheep, 0, {autoAlpha: 1, rotation: -5})
 
-      timeline.to(pig, 1, {autoAlpha: 1})
 
-
-      timeline.to(pig, .25, {
+      TweenMax.to(pig, .25, {
         css: {y: -50, transformOrigin: '50% 50%'},// remove default easing for seamless loop
         repeatDelay: null,
         repeat: -1,
         yoyo: true,
+        ease: Power2.ease
       })
       timeline.to(pig, 5, {
-          css: {x: 1400, transformOrigin: '50% 50%'},// remove default easing for seamless loop
+          css: {x: windowWidth, transformOrigin: '50% 50%'},// remove default easing for seamless loop
           repeatDelay: null,
           repeat: -1,
-          yoyo: false,
+          yoyo: false
         }
       )
 
@@ -52,13 +54,15 @@
         repeatDelay: null,
         repeat: -1,
         yoyo: true,
+        ease: Power2.easeInOut
       })
 
-      timeline.to(Rabbit, 1, {
-        css: {y: -10, transformOrigin: '50% 50%'},// remove default easing for seamless loop
+      timeline.to(Rabbit, .5, {
+        css: {y: -6, transformOrigin: '50% 50%'},// remove default easing for seamless loop
         repeatDelay: null,
         repeat: -1,
         yoyo: true,
+        ease: Power2.easeIn
       })
 
       timeline.to(Sheep, 1, {
@@ -66,13 +70,15 @@
         repeatDelay: null,
         repeat: -1,
         yoyo: true,
+        ease: Power2.easeInOut
       })
 
       timeline.to(Cow, 1, {
-        css: {rotation: 5, transformOrigin: '50% 50%'},// remove default easing for seamless loop
+        css: {rotation: -5, transformOrigin: '50% 50%'},// remove default easing for seamless loop
         repeatDelay: null,
         repeat: -1,
         yoyo: true,
+        ease: Power2.easeInOut
       })
 
 
@@ -82,10 +88,10 @@
 
 <style>
     .Subject {
-      position: absolute;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 11;
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 11;
     }
 
     .Horse {
